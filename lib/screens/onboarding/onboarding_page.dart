@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:ride_hailing_app/widgets/buttons.dart';
 
 class OnboardingPage extends StatefulWidget {
   const OnboardingPage({super.key});
@@ -100,36 +100,10 @@ class _OnboardingPageState extends State<OnboardingPage> {
             flex: 1,
             child: Padding(
               padding: const EdgeInsets.all(25.0),
-              child: SizedBox(
-                width: double.infinity,
-                child: ElevatedButton(
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor: const Color(0xff4168EB),
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(10),
-                    ),
-                  ),
-                  onPressed: () {
-                    if (currentPage == onboardingData.length - 1) {
-                      Get.offAllNamed('/location');
-                    } else {
-                      _pageController.nextPage(
-                        duration: const Duration(milliseconds: 300),
-                        curve: Curves.easeInOut,
-                      );
-                    }
-                  },
-                  child: Text(
-                    currentPage == onboardingData.length - 1
-                        ? 'Get Started'
-                        : 'Next',
-                    style: GoogleFonts.poppins(
-                        fontSize: 16,
-                        fontWeight: FontWeight.w600,
-                        color: Colors.white),
-                  ),
-                ),
-              ),
+              child: OnboardingButton(
+                  currentPage: currentPage,
+                  onboardingData: onboardingData,
+                  pageController: _pageController),
             ),
           ),
         ],

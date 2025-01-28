@@ -18,10 +18,9 @@ class AuthService {
     }
   }
 
-  Future<Response> signUp(String name, String email, String password) async {
+  Future<Response> signUp(String email, String password) async {
     try {
       final response = await _dio.post('/register', data: {
-        'name': name,
         'email': email,
         'password': password,
       });

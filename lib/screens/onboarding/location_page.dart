@@ -1,15 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:get/get.dart';
+import 'package:ride_hailing_app/widgets/buttons.dart';
 
 class LocationRequestPage extends StatelessWidget {
   const LocationRequestPage({super.key});
 
   Future<void> _requestLocationPermission() async {
-    Get.offAllNamed('/login');
+    Get.toNamed('/login');
     final status = await Permission.location.request();
     if (status.isGranted) {
-      Get.offAllNamed('/login');
+      Get.toNamed('/login');
     } else {
       Get.snackbar(
           'Permission Denied', 'Location access is required to proceed.');
@@ -63,48 +64,6 @@ class LocationRequestPage extends StatelessWidget {
             flex: 2,
           )
         ],
-      ),
-    );
-  }
-}
-
-class UseCurrentLocationButton extends StatelessWidget {
-  const UseCurrentLocationButton({
-    super.key,
-    this.onPressed,
-  });
-
-  final Function()? onPressed;
-
-  @override
-  Widget build(BuildContext context) {
-    return Center(
-      child: OutlinedButton.icon(
-        onPressed: onPressed,
-        icon: Image.asset(
-          "assets/path_icon.png", // Icon for location
-          height: 20,
-          width: 20,
-          color: const Color(0xff4168EB), // Icon color
-        ),
-        label: const Text(
-          'Use Current Location',
-          style: TextStyle(
-            fontSize: 16,
-            color: Color(0xff4168EB), // Text color
-            fontWeight: FontWeight.bold,
-          ),
-        ),
-        style: OutlinedButton.styleFrom(
-          side: const BorderSide(color: Color(0xff4168EB)), // Border color
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(12), // Rounded corners
-          ),
-          padding: const EdgeInsets.symmetric(
-            vertical: 14,
-            horizontal: 50,
-          ), // Padding
-        ),
       ),
     );
   }

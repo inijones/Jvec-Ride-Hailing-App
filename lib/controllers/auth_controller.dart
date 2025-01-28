@@ -26,9 +26,10 @@ class AuthController extends GetxController {
   Future<void> signUp(String name, String email, String password) async {
     isLoading.value = true;
     try {
-      final response = await _authService.signUp(name, email, password);
+      final response = await _authService.signUp(email, password);
       log('Sign Up successful: ${response.data}');
       Get.offNamed('/login'); // Navigate to login screen
+      Get.offAll(() => HomePage(userEmail: email));
     } catch (error) {
       Get.snackbar('Error', error.toString());
     } finally {
