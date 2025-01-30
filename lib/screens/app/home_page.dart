@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:ride_hailing_app/screens/app/map_page.dart';
 
 class HomePage extends StatelessWidget {
   final String userEmail;
@@ -18,7 +19,7 @@ class HomePage extends StatelessWidget {
           children: [
             Text(
               'Welcome, $userEmail!',
-              style:  const TextStyle(fontSize: 20),
+              style: const TextStyle(fontSize: 20),
             ),
             const SizedBox(height: 20),
             ElevatedButton(
@@ -28,9 +29,13 @@ class HomePage extends StatelessWidget {
               },
               child: const Text('Logout'),
             ),
+            const Expanded(
+              child: MapPage(),
+            ),
           ],
         ),
       ),
+      
     );
   }
 }
