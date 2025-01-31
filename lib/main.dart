@@ -41,7 +41,7 @@ class MyApp extends StatelessWidget {
         GetPage(name: '/login', page: () => LoginPage()),
         GetPage(name: '/sign-up', page: () => SignUpPage()),
         // App Pages
-        GetPage(name: '/home', page: () => const HomePage(userEmail: '')),
+        GetPage(name: '/home', page: () => HomePage(userEmail: '')),
         GetPage(name: '/drawer', page: () => const CustomDrawer()),
       ],
     );

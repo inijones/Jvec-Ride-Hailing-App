@@ -8,13 +8,12 @@ import 'package:latlong2/latlong.dart';
 import 'package:ride_hailing_app/controllers/driver_controller.dart';
 import 'package:ride_hailing_app/screens/app/widgets/driver_modal.dart';
 import 'package:ride_hailing_app/services/location_service.dart';
-import 'package:ride_hailing_app/widgets/drawer.dart';
 import 'package:url_launcher/url_launcher.dart';
 
-import 'package:ride_hailing_app/screens/app/home_page.dart';
-
 class MapPage extends StatefulWidget {
-  const MapPage({super.key});
+  const MapPage({super.key, required this.scaffoldKey});
+
+  final GlobalKey<ScaffoldState> scaffoldKey;
 
   @override
   _MapPageState createState() => _MapPageState();
@@ -170,12 +169,11 @@ class _MapPageState extends State<MapPage> {
             top: 50,
             left: 10,
             child: GestureDetector(
-              onDoubleTap: () => Get.to(
-                () => const CustomDrawer(),
-                transition: Transition.leftToRight,
-                duration: const Duration(milliseconds: 300),
-                curve: Curves.easeInOut,
-              ),
+              onTap: () {
+                
+                widget.scaffoldKey.currentState
+                    ?.openDrawer(); // Open the drawer
+              },
               child: Image.asset(
                 "assets/user_avatar.png",
                 height: 60,

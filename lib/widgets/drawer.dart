@@ -2,12 +2,18 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:get/get.dart'; // Import GetX
 
-class CustomDrawer extends StatelessWidget {
+class CustomDrawer extends StatefulWidget {
   const CustomDrawer({super.key});
 
   @override
+  State<CustomDrawer> createState() => _CustomDrawerState();
+}
+
+class _CustomDrawerState extends State<CustomDrawer> {
+  @override
   Widget build(BuildContext context) {
     return Drawer(
+      width: Get.width * 0.7,
       child: ListView(
         padding: EdgeInsets.zero,
         children: [
@@ -70,7 +76,7 @@ class CustomDrawer extends StatelessWidget {
           ListTile(
             title: Text('Home', style: GoogleFonts.poppins(fontSize: 16)),
             onTap: () {
-              Get.toNamed('/home');
+              Get.back();
             },
           ),
           ListTile(
@@ -82,7 +88,7 @@ class CustomDrawer extends StatelessWidget {
           ListTile(
             title: Text('Settings', style: GoogleFonts.poppins(fontSize: 16)),
             onTap: () {
-              Get.toNamed('/settings');
+              // Get.toNamed('/settings');
             },
           ),
           ListTile(
