@@ -8,7 +8,10 @@ import 'package:latlong2/latlong.dart';
 import 'package:ride_hailing_app/controllers/driver_controller.dart';
 import 'package:ride_hailing_app/screens/app/widgets/driver_modal.dart';
 import 'package:ride_hailing_app/services/location_service.dart';
+import 'package:ride_hailing_app/widgets/drawer.dart';
 import 'package:url_launcher/url_launcher.dart';
+
+import 'package:ride_hailing_app/screens/app/home_page.dart';
 
 class MapPage extends StatefulWidget {
   const MapPage({super.key});
@@ -166,10 +169,18 @@ class _MapPageState extends State<MapPage> {
           Positioned(
             top: 50,
             left: 10,
-            child: Image.asset(
-              "assets/user_avatar.png",
-              height: 60,
-              width: 60,
+            child: GestureDetector(
+              onDoubleTap: () => Get.to(
+                () => const CustomDrawer(),
+                transition: Transition.leftToRight,
+                duration: const Duration(milliseconds: 300),
+                curve: Curves.easeInOut,
+              ),
+              child: Image.asset(
+                "assets/user_avatar.png",
+                height: 60,
+                width: 60,
+              ),
             ),
           ),
 
@@ -243,3 +254,16 @@ class _MapPageState extends State<MapPage> {
     );
   }
 }
+
+/* GestureDetector(
+              onDoubleTap: () => Get.bottomSheet(
+                const CustomDrawer(),
+                isScrollControlled: true, // Makes it full screen if necessary
+                backgroundColor: Colors.white,
+              ),
+              child: Image.asset(
+                "assets/user_avatar.png",
+                height: 60,
+                width: 60,
+              ),
+            ), */
