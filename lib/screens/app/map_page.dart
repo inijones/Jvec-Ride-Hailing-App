@@ -11,7 +11,9 @@ import 'package:ride_hailing_app/services/location_service.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class MapPage extends StatefulWidget {
-  const MapPage({super.key});
+  const MapPage({super.key, required this.scaffoldKey});
+
+  final GlobalKey<ScaffoldState> scaffoldKey;
 
   @override
   _MapPageState createState() => _MapPageState();
@@ -166,10 +168,17 @@ class _MapPageState extends State<MapPage> {
           Positioned(
             top: 50,
             left: 10,
-            child: Image.asset(
-              "assets/user_avatar.png",
-              height: 60,
-              width: 60,
+            child: GestureDetector(
+              onTap: () {
+                
+                widget.scaffoldKey.currentState
+                    ?.openDrawer(); // Open the drawer
+              },
+              child: Image.asset(
+                "assets/user_avatar.png",
+                height: 60,
+                width: 60,
+              ),
             ),
           ),
 
@@ -243,3 +252,16 @@ class _MapPageState extends State<MapPage> {
     );
   }
 }
+
+/* GestureDetector(
+              onDoubleTap: () => Get.bottomSheet(
+                const CustomDrawer(),
+                isScrollControlled: true, // Makes it full screen if necessary
+                backgroundColor: Colors.white,
+              ),
+              child: Image.asset(
+                "assets/user_avatar.png",
+                height: 60,
+                width: 60,
+              ),
+            ), */

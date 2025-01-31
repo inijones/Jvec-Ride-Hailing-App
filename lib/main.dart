@@ -8,6 +8,8 @@ import 'package:ride_hailing_app/screens/auth/signup_page.dart';
 import 'package:ride_hailing_app/screens/onboarding/location_page.dart';
 import 'package:ride_hailing_app/screens/onboarding/onboarding_page.dart';
 import 'package:ride_hailing_app/screens/onboarding/splash_page.dart';
+import 'package:ride_hailing_app/screens/app/history_page.dart';
+import 'package:ride_hailing_app/widgets/drawer.dart';
 
 void main() {
   runApp(const MyApp());
@@ -23,9 +25,11 @@ class MyApp extends StatelessWidget {
       initialRoute: '/splash',
       theme: ThemeData(
         textTheme: TextTheme(
-          headlineMedium: GoogleFonts.poppins(fontSize: 32, fontWeight: FontWeight.bold),
+          headlineMedium:
+              GoogleFonts.poppins(fontSize: 32, fontWeight: FontWeight.bold),
           bodyMedium: GoogleFonts.poppins(fontSize: 16),
-          displayMedium: GoogleFonts.poppins(fontSize: 18, fontWeight: FontWeight.w600),
+          displayMedium:
+              GoogleFonts.poppins(fontSize: 18, fontWeight: FontWeight.w600),
         ),
         primarySwatch: Colors.blue,
       ),
@@ -38,7 +42,9 @@ class MyApp extends StatelessWidget {
         GetPage(name: '/login', page: () => LoginPage()),
         GetPage(name: '/sign-up', page: () => SignUpPage()),
         // App Pages
-        GetPage(name: '/home', page: () => const HomePage(userEmail: '')),
+        GetPage(name: '/home', page: () => HomePage(userEmail: '')),
+        GetPage(name: '/drawer', page: () => const CustomDrawer()),
+        GetPage(name: '/history', page: () => const HistoryPage()),
       ],
     );
   }
