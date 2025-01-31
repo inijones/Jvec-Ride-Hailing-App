@@ -6,6 +6,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:ride_hailing_app/controllers/driver_controller.dart';
 import 'package:ride_hailing_app/controllers/ride_controller.dart';
 import 'package:ride_hailing_app/models/driver_model.dart';
+import 'package:ride_hailing_app/screens/app/widgets/driver_widget.dart';
 import 'package:ride_hailing_app/screens/app/widgets/location_info_widget.dart';
 import 'package:ride_hailing_app/widgets/buttons.dart';
 
@@ -260,7 +261,10 @@ class _FindDriverModalState extends State<FindDriverModal> {
 
 class RideInfoModal extends StatelessWidget {
   final Driver driver;
-  const RideInfoModal({super.key, required this.driver});
+  const RideInfoModal({
+    super.key,
+    required this.driver,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -278,53 +282,7 @@ class RideInfoModal extends StatelessWidget {
           const Text("Driver is on the way!",
               style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold)),
           const SizedBox(height: 10),
-          Column(
-            children: [
-              Row(
-                children: [
-                  Image.asset("assets/driver_image.png", height: 50, width: 50),
-                  const SizedBox(width: 20),
-                  Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Row(
-                        children: [
-                          Image.asset(
-                            "assets/driver_icon.png",
-                            height: 14,
-                            width: 14,
-                          ),
-                          const SizedBox(width: 10),
-                          const Text(
-                            "Your Driver",
-                            style: const TextStyle(
-                                fontSize: 12,
-                                fontWeight: FontWeight.bold,
-                                color: Colors.grey),
-                          ),
-                        ],
-                      ),
-                      Text(
-                        driver.name,
-                      ),
-                    ],
-                  ),
-                  const Spacer(),
-                  Image.asset(
-                    "assets/call_icon.png",
-                    height: 50,
-                    width: 50,
-                  ),
-                  const SizedBox(width: 10),
-                  Image.asset(
-                    "assets/message_rider_icon.png",
-                    height: 50,
-                    width: 50,
-                  ),
-                ],
-              ),
-            ],
-          ),
+          DriverWidget(driver: driver),
           const SizedBox(height: 30),
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,

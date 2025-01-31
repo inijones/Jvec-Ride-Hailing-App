@@ -18,16 +18,16 @@ class FindingDriversController extends GetxController {
     selectedDriver.value = driver;
     Get.bottomSheet(RideInfoModal(driver: driver));
 
-    // After 3 seconds, show "Driving to Location" modal
+    // After 10 seconds, show "Driving to Location" modal
     Future.delayed(const Duration(seconds: 10), () {
       Get.back();
       Get.bottomSheet(DrivingToLocationModal(driver: driver));
 
       // After another 10 seconds, complete the trip
-      // Future.delayed(const Duration(seconds: 10), () {
-      //   Get.back(); // Close "Driving to Location" modal
-      //   showTripCompletedDialog(); // Show trip completed alert
-      // });
+      Future.delayed(const Duration(seconds: 10), () {
+        Get.back(); // Close "Driving to Location" modal
+        showTripCompletedDialog(); // Show trip completed alert
+      });
     });
   }
 }
