@@ -8,6 +8,7 @@ import 'package:ride_hailing_app/screens/auth/signup_page.dart';
 import 'package:ride_hailing_app/screens/onboarding/location_page.dart';
 import 'package:ride_hailing_app/screens/onboarding/onboarding_page.dart';
 import 'package:ride_hailing_app/screens/onboarding/splash_page.dart';
+import 'package:ride_hailing_app/screens/app/history_page.dart';
 import 'package:ride_hailing_app/widgets/drawer.dart';
 
 void main() {
@@ -43,6 +44,7 @@ class MyApp extends StatelessWidget {
         // App Pages
         GetPage(name: '/home', page: () => HomePage(userEmail: '')),
         GetPage(name: '/drawer', page: () => const CustomDrawer()),
+        GetPage(name: '/history', page: () => const HistoryPage()),
       ],
     );
   }

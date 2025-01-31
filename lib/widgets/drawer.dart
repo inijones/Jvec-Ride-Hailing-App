@@ -19,7 +19,8 @@ class _CustomDrawerState extends State<CustomDrawer> {
         children: [
           UserAccountsDrawerHeader(
             decoration: const BoxDecoration(
-              color: Color(0xff4168EB), // Consistent background color
+              color: Color(0xff4168EB),
+              // Consistent background color
             ),
             accountName: Text(
               'Eve Holt',
@@ -57,6 +58,7 @@ class _CustomDrawerState extends State<CustomDrawer> {
                     ),
                   ),
                 ),
+// Adjust space
               ],
             ),
             currentAccountPicture: CircleAvatar(
@@ -74,24 +76,28 @@ class _CustomDrawerState extends State<CustomDrawer> {
             ),
           ),
           ListTile(
+            leading: const Icon(Icons.home),
             title: Text('Home', style: GoogleFonts.poppins(fontSize: 16)),
             onTap: () {
               Get.back();
             },
           ),
           ListTile(
+            leading: const Icon(Icons.history),
             title: Text('History', style: GoogleFonts.poppins(fontSize: 16)),
             onTap: () {
               Get.toNamed('/history');
             },
           ),
           ListTile(
+            leading: const Icon(Icons.settings),
             title: Text('Settings', style: GoogleFonts.poppins(fontSize: 16)),
             onTap: () {
               // Get.toNamed('/settings');
             },
           ),
           ListTile(
+            leading: const Icon(Icons.logout),
             title: Text('Logout', style: GoogleFonts.poppins(fontSize: 16)),
             onTap: () {
               Get.offAllNamed('/login');
