@@ -92,10 +92,14 @@ class AppButton extends StatelessWidget {
     super.key,
     required this.text,
     this.onPressed,
+    this.textColor,
+    this.buttonColor,
   });
 
   final String text;
   final Function()? onPressed;
+  final Color? textColor;
+  final Color? buttonColor;
 
   final double height = 65;
 
@@ -106,7 +110,7 @@ class AppButton extends StatelessWidget {
       width: double.infinity,
       child: ElevatedButton(
         style: ElevatedButton.styleFrom(
-          backgroundColor: const Color(0xff4168EB),
+          backgroundColor: buttonColor ?? const Color(0xff4168EB),
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(20),
           ),
@@ -115,7 +119,10 @@ class AppButton extends StatelessWidget {
         child: Text(
           text,
           style: GoogleFonts.poppins(
-              fontSize: 16, fontWeight: FontWeight.w600, color: Colors.white),
+            fontSize: 16,
+            fontWeight: FontWeight.w600,
+            color: textColor ?? Colors.white,
+          ),
         ),
       ),
     );
