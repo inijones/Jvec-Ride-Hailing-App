@@ -1,5 +1,6 @@
-import 'dart:developer';
+import 'dart:math';
 
+import 'package:awesome_notifications/awesome_notifications.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_map/flutter_map.dart';
 import 'package:geolocator/geolocator.dart';
@@ -26,6 +27,7 @@ class _MapPageState extends State<MapPage> {
   LatLng? currentPosition;
   LatLng? pickupLocation;
   LatLng? dropoffLocation;
+  List<LatLng> carLocations = [];
 
   var polylines = <Polyline>[].obs;
 
@@ -33,6 +35,11 @@ class _MapPageState extends State<MapPage> {
   void initState() {
     super.initState();
     _getUserLocation();
+    AwesomeNotifications().isNotificationAllowed().then((isAllowed) {
+      if (!isAllowed) {
+        AwesomeNotifications().requestPermissionToSendNotifications();
+      }
+    });
   }
 
   Future<void> _getUserLocation() async {
@@ -42,14 +49,14 @@ class _MapPageState extends State<MapPage> {
       if (!mounted) return;
       setState(() {
         currentPosition = LatLng(position.latitude, position.longitude);
-        log("Current Position: $currentPosition");
+        debugPrint("Current Position: $currentPosition");
         if (_isMapReady && mapController != null && currentPosition != null) {
           mapController?.move(currentPosition!, 16);
           Future.delayed(const Duration(seconds: 1), () {
             Get.bottomSheet(const LocationInstructionModal());
           });
         } else {
-          log("Map not ready");
+          debugPrint("Map not ready");
         }
       });
     } catch (e) {
@@ -68,10 +75,28 @@ class _MapPageState extends State<MapPage> {
           pickupLocation = tappedLocation;
         } else {
           dropoffLocation ??= tappedLocation;
+          carLocations = generateCarLocations(currentPosition!);
           controller.findDriver();
         }
       },
     );
+  }
+
+  List<LatLng> generateCarLocations(LatLng userLocation) {
+    Random random = Random();
+    List<LatLng> carLocations = [];
+
+    for (int i = 0; i < 3; i++) {
+      double offsetLat = (random.nextDouble() - 0.5) / 333; // ~300m offset
+      double offsetLng = (random.nextDouble() - 0.5) / 333;
+
+      carLocations.add(LatLng(
+        userLocation.latitude + offsetLat,
+        userLocation.longitude + offsetLng,
+      ));
+    }
+
+    return carLocations;
   }
 
   @override
@@ -91,7 +116,7 @@ class _MapPageState extends State<MapPage> {
                 setState(() {
                   _isMapReady = true;
                 });
-                log("Map is ready");
+                debugPrint("Map is ready");
               },
               onTap: (tapPosition, latLng) {
                 _onTap(latLng);
@@ -150,6 +175,16 @@ class _MapPageState extends State<MapPage> {
                           fit: BoxFit.cover,
                         ),
                       ),
+                    for (var car in carLocations)
+                      Marker(
+                        point: car,
+                        width: 30,
+                        height: 30,
+                        child: Image.asset(
+                          "assets/car_map_icon.png",
+                          width: 30,
+                        ),
+                      ),
                   ],
                 ),
             ],
@@ -170,7 +205,6 @@ class _MapPageState extends State<MapPage> {
             left: 10,
             child: GestureDetector(
               onTap: () {
-                
                 widget.scaffoldKey.currentState
                     ?.openDrawer(); // Open the drawer
               },
@@ -221,7 +255,7 @@ class _MapPageState extends State<MapPage> {
                     if (_isMapReady) {
                       mapController?.move(currentPosition!, 16);
                     } else {
-                      log("Map is not ready yet!");
+                      debugPrint("Map is not ready yet!");
                     }
                   },
                   child: Container(
@@ -265,3 +299,4 @@ class _MapPageState extends State<MapPage> {
                 width: 60,
               ),
             ), */
+

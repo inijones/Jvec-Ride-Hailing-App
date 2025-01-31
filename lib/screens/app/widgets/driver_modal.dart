@@ -1,5 +1,6 @@
 import 'dart:math';
 
+import 'package:awesome_notifications/awesome_notifications.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -259,12 +260,41 @@ class _FindDriverModalState extends State<FindDriverModal> {
   }
 }
 
-class RideInfoModal extends StatelessWidget {
+class RideInfoModal extends StatefulWidget {
   final Driver driver;
   const RideInfoModal({
     super.key,
     required this.driver,
   });
+
+  @override
+  State<RideInfoModal> createState() => _RideInfoModalState();
+}
+
+class _RideInfoModalState extends State<RideInfoModal> {
+  bool showButton = true;
+
+  @override
+  void initState() {
+    super.initState();
+    AwesomeNotifications().isNotificationAllowed().then((isAllowed) {
+      if (!isAllowed) {
+        AwesomeNotifications().requestPermissionToSendNotifications();
+      }
+    });
+  }
+
+  void showLocalNotification() {
+    AwesomeNotifications().createNotification(
+      content: NotificationContent(
+        id: 1,
+        channelKey: 'basic_channel',
+        title: '🚗 Ride Update',
+        body: 'Your driver is arriving in 2 minutes!',
+        notificationLayout: NotificationLayout.Default,
+      ),
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -282,14 +312,14 @@ class RideInfoModal extends StatelessWidget {
           const Text("Driver is on the way!",
               style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold)),
           const SizedBox(height: 10),
-          DriverWidget(driver: driver),
+          DriverWidget(driver: widget.driver),
           const SizedBox(height: 30),
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               const Text("Vehicle:"),
               Text(
-                driver.vehicleType,
+                widget.driver.vehicleType,
                 style: GoogleFonts.roboto(
                   color: const Color(0xff4168EB),
                 ),
@@ -329,7 +359,7 @@ class RideInfoModal extends StatelessWidget {
               const Text("Rating:"),
               Text(
                 // star text
-                " ⭐ ${driver.rating}",
+                " ⭐ ${widget.driver.rating}",
                 style: GoogleFonts.roboto(
                   color: const Color(0xff4168EB),
                 ),
@@ -368,10 +398,18 @@ class RideInfoModal extends StatelessWidget {
             ],
           ),
           const SizedBox(height: 16),
-          AppButton(
-            onPressed: () => Get.back(),
-            text: "Confirm Ride",
-          )
+          if (showButton == true)
+            AppButton(
+              onPressed: () => {
+                showLocalNotification(),
+                setState(() {
+                  showButton = false;
+                }),
+              },
+              text: "Confirm Ride",
+            )
+          else
+            const SizedBox(height: 40),
         ],
       ),
     );

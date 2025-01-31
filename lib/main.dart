@@ -1,3 +1,4 @@
+import 'package:awesome_notifications/awesome_notifications.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get_navigation/src/root/get_material_app.dart';
 import 'package:get/get_navigation/src/routes/get_route.dart';
@@ -10,8 +11,32 @@ import 'package:ride_hailing_app/screens/onboarding/onboarding_page.dart';
 import 'package:ride_hailing_app/screens/onboarding/splash_page.dart';
 import 'package:ride_hailing_app/screens/app/history_page.dart';
 import 'package:ride_hailing_app/widgets/drawer.dart';
+import 'package:awesome_notifications/awesome_notifications.dart'
+    as awesome_notification;
 
 void main() {
+  WidgetsFlutterBinding.ensureInitialized();
+  
+  AwesomeNotifications().initialize(
+    'resource://drawable/jvec_logo', // App icon
+    [
+      NotificationChannel(
+        channelKey: 'basic_channel',
+        channelName: 'Basic Notifications',
+        channelDescription: 'Notification channel for basic alerts',
+         onlyAlertOnce: true,
+        defaultColor: Colors.blue,
+        importance: NotificationImportance.High,
+        ledColor: Colors.white,
+      ),
+    ],
+    debug: true,
+  );
+
+   awesome_notification.AwesomeNotifications().setListeners(
+    onActionReceivedMethod: NotificationController.onActionReceivedMethod,
+  );
+
   runApp(const MyApp());
 }
 
@@ -47,5 +72,23 @@ class MyApp extends StatelessWidget {
         GetPage(name: '/history', page: () => const HistoryPage()),
       ],
     );
+  }
+}
+
+class NotificationController {
+  @pragma('vm:entry-point')
+  static Future<void> onActionReceivedMethod(
+      ReceivedAction receivedAction) async {
+    if (receivedAction.payload != null) {
+      String? screen = receivedAction.payload!['screen'];
+      if (screen != null) {
+        if (screen == 'sync') {
+          // navigatorKey.currentState?.pushNamed(
+          //   '/sync',
+          //   arguments: receivedAction.payload,
+          // );
+        }
+      }
+    }
   }
 }
